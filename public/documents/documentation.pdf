@@ -1,0 +1,127 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 3000
+>>
+stream
+BT
+/F1 18 Tf
+50 750 Td
+(VAULTO PLATFORM DOCUMENTATION) Tj
+0 -30 Td
+/F1 12 Tf
+(Version 1.0 - December 2024) Tj
+0 -40 Td
+/F1 14 Tf
+(PLATFORM OVERVIEW) Tj
+0 -25 Td
+/F1 12 Tf
+(Vaulto is an AI-powered stablecoin platform that enables users to mint stablecoins, trade tokenized assets, and access professional investment vaults.) Tj
+0 -30 Td
+/F1 14 Tf
+(KEY FEATURES) Tj
+0 -25 Td
+/F1 12 Tf
+(• Mint Stablecoins: Create vltUSD, vltUSDy, and vltUSDe) Tj
+0 -20 Td
+/F1 12 Tf
+(• Swap & Invest: Trade tokenized stocks, commodities, and private companies) Tj
+0 -20 Td
+/F1 12 Tf
+(• Professional Vaults: Access managed investment strategies) Tj
+0 -20 Td
+/F1 12 Tf
+(• Prediction Markets: Trade on crypto market outcomes) Tj
+0 -20 Td
+/F1 12 Tf
+(• AI Assistant: Get personalized investment guidance) Tj
+0 -30 Td
+/F1 14 Tf
+(GETTING STARTED) Tj
+0 -25 Td
+/F1 12 Tf
+(1. Connect your wallet using the wallet button in the header) Tj
+0 -20 Td
+/F1 12 Tf
+(2. Choose your desired service from the navigation menu) Tj
+0 -20 Td
+/F1 12 Tf
+(3. Follow the on-screen instructions for each feature) Tj
+0 -20 Td
+/F1 12 Tf
+(4. Use the AI Assistant for guidance and support) Tj
+0 -30 Td
+/F1 14 Tf
+(SUPPORTED WALLETS) Tj
+0 -25 Td
+/F1 12 Tf
+(• MetaMask • WalletConnect • Coinbase Wallet • Trust Wallet) Tj
+0 -30 Td
+/F1 14 Tf
+(API INTEGRATION) Tj
+0 -25 Td
+/F1 12 Tf
+(For developers, Vaulto provides REST APIs for programmatic access to platform features. Documentation available at api.vaulto.ai) Tj
+0 -30 Td
+/F1 14 Tf
+(CONTACT SUPPORT) Tj
+0 -25 Td
+/F1 12 Tf
+(For technical support and questions, contact us at support@vaulto.ai) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000274 00000 n 
+0000003340 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+3420
+%%EOF

@@ -1,0 +1,118 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 2500
+>>
+stream
+BT
+/F1 18 Tf
+50 750 Td
+(VAULTO TERMS OF SERVICE) Tj
+0 -30 Td
+/F1 12 Tf
+(Last Updated: December 2024) Tj
+0 -40 Td
+/F1 14 Tf
+(1. ACCEPTANCE OF TERMS) Tj
+0 -25 Td
+/F1 12 Tf
+(By accessing and using Vaulto's platform, you accept and agree to be bound by the terms and provision of this agreement.) Tj
+0 -30 Td
+/F1 14 Tf
+(2. DESCRIPTION OF SERVICE) Tj
+0 -25 Td
+/F1 12 Tf
+(Vaulto provides a decentralized platform for minting stablecoins, trading tokenized assets, and accessing AI-powered investment guidance.) Tj
+0 -30 Td
+/F1 14 Tf
+(3. USER RESPONSIBILITIES) Tj
+0 -25 Td
+/F1 12 Tf
+(Users are responsible for maintaining the security of their accounts, complying with applicable laws, and using the platform in accordance with these terms.) Tj
+0 -30 Td
+/F1 14 Tf
+(4. RISK DISCLOSURE) Tj
+0 -25 Td
+/F1 12 Tf
+(Cryptocurrency and tokenized asset trading involves substantial risk of loss. Past performance does not guarantee future results.) Tj
+0 -30 Td
+/F1 14 Tf
+(5. INTELLECTUAL PROPERTY) Tj
+0 -25 Td
+/F1 12 Tf
+(All content, trademarks, and intellectual property on the platform are owned by Vaulto or its licensors and are protected by applicable laws.) Tj
+0 -30 Td
+/F1 14 Tf
+(6. LIMITATION OF LIABILITY) Tj
+0 -25 Td
+/F1 12 Tf
+(Vaulto shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the platform.) Tj
+0 -30 Td
+/F1 14 Tf
+(7. TERMINATION) Tj
+0 -25 Td
+/F1 12 Tf
+(We may terminate or suspend your account at any time for violation of these terms or for any other reason at our sole discretion.) Tj
+0 -30 Td
+/F1 14 Tf
+(8. CONTACT INFORMATION) Tj
+0 -25 Td
+/F1 12 Tf
+(For questions about these Terms of Service, please contact us at legal@vaulto.ai) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000274 00000 n 
+0000002840 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+2920
+%%EOF

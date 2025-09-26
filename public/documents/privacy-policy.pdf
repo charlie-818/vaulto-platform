@@ -1,0 +1,106 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 2000
+>>
+stream
+BT
+/F1 18 Tf
+50 750 Td
+(VAULTO PRIVACY POLICY) Tj
+0 -30 Td
+/F1 12 Tf
+(Last Updated: December 2024) Tj
+0 -40 Td
+/F1 14 Tf
+(1. INFORMATION WE COLLECT) Tj
+0 -25 Td
+/F1 12 Tf
+(We collect information you provide directly to us, such as when you create an account, use our services, or contact us for support. This may include your name, email address, wallet address, and transaction data.) Tj
+0 -30 Td
+/F1 14 Tf
+(2. HOW WE USE YOUR INFORMATION) Tj
+0 -25 Td
+/F1 12 Tf
+(We use the information we collect to provide, maintain, and improve our services, process transactions, communicate with you, and ensure platform security.) Tj
+0 -30 Td
+/F1 14 Tf
+(3. INFORMATION SHARING) Tj
+0 -25 Td
+/F1 12 Tf
+(We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy or as required by law.) Tj
+0 -30 Td
+/F1 14 Tf
+(4. DATA SECURITY) Tj
+0 -25 Td
+/F1 12 Tf
+(We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.) Tj
+0 -30 Td
+/F1 14 Tf
+(5. YOUR RIGHTS) Tj
+0 -25 Td
+/F1 12 Tf
+(You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us.) Tj
+0 -30 Td
+/F1 14 Tf
+(6. CONTACT US) Tj
+0 -25 Td
+/F1 12 Tf
+(If you have any questions about this Privacy Policy, please contact us at privacy@vaulto.ai) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000274 00000 n 
+0000002340 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+2420
+%%EOF
