@@ -61,6 +61,33 @@ A modern Web3 platform for minting stablecoins and swapping tokenized assets wit
 3. **Open your browser**:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## Deployment
+
+### Netlify Deployment
+
+This project is configured for easy deployment on Netlify:
+
+1. **Build the project**:
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to Netlify**:
+   - Connect your GitHub repository to Netlify
+   - The build settings are pre-configured in `netlify.toml`
+   - Build command: `npm run build`
+   - Publish directory: `out`
+
+3. **Live Demo**:
+   The project is configured for static export and will work seamlessly on Netlify's CDN.
+
+### Build Configuration
+
+- **Static Export**: Configured for static site generation
+- **Image Optimization**: Disabled for static export compatibility
+- **Trailing Slashes**: Enabled for proper routing
+- **Cache Headers**: Optimized for static assets
+
 ## Project Structure
 
 ```
