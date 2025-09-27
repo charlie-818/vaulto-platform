@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { createChart, IChartApi, ISeriesApi, ColorType } from 'lightweight-charts'
+import { createChart, IChartApi, ISeriesApi, ColorType, CandlestickSeries } from 'lightweight-charts'
 
 interface PriceData {
   time: number
@@ -83,7 +83,6 @@ export default function PriceChart({ data, symbol, height = 300, className = '' 
           },
           timeScale: {
             borderColor: '#374151',
-            textColor: '#E5E7EB',
             timeVisible: true,
             secondsVisible: false,
           },
@@ -92,7 +91,7 @@ export default function PriceChart({ data, symbol, height = 300, className = '' 
         })
 
         // Create candlestick series
-        const candlestickSeries = chart.addCandlestickSeries({
+        const candlestickSeries = chart.addSeries(CandlestickSeries, {
           upColor: '#10B981',
           downColor: '#EF4444',
           borderDownColor: '#EF4444',
@@ -162,7 +161,7 @@ export default function PriceChart({ data, symbol, height = 300, className = '' 
       try {
         // Ensure data is properly formatted
         const formattedData = data.map(item => ({
-          time: item.time,
+          time: item.time as any,
           open: Number(item.open),
           high: Number(item.high),
           low: Number(item.low),
