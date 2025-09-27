@@ -8,8 +8,11 @@ import { TrendingUp, Filter, Search, ExternalLink, Target, Activity } from 'luci
 import AIAssistant from '@/components/AIAssistant'
 import WalletButton from '@/components/WalletButton'
 import AssetListItem from '@/components/AssetListItem'
-import { tokenizedAssets, mockTransactions } from '@/lib/mockData'
-import { WalletState, Transaction, TokenizedAsset } from '@/types'
+import IndexCard from '@/components/IndexCard'
+import IndexDetailsModal from '@/components/IndexDetailsModal'
+import TradingDashboard from '@/components/TradingDashboard'
+import { tokenizedAssets, customIndices, mockTransactions } from '@/lib/mockData'
+import { WalletState, Transaction, TokenizedAsset, CustomIndex, IndexTrade } from '@/types'
 import { generateMockAddress, generateMockTxHash } from '@/lib/utils'
 
 export default function SwapPage() {
@@ -24,6 +27,9 @@ export default function SwapPage() {
   const [aiQuestion, setAiQuestion] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [activeView, setActiveView] = useState<'dashboard' | 'indices' | 'assets'>('dashboard')
+  const [selectedIndex, setSelectedIndex] = useState<CustomIndex | null>(null)
+  const [indexTrades, setIndexTrades] = useState<IndexTrade[]>([])
 
   const handleConnectWallet = () => {
     const mockAddress = generateMockAddress()
@@ -73,6 +79,33 @@ export default function SwapPage() {
     setAiAssistantOpen(true)
   }
 
+  const handleIndexInvest = (indexId: string, amount: number) => {
+    const newTrade: IndexTrade = {
+      id: Date.now().toString(),
+      type: 'buy',
+      indexId: indexId,
+      amount: amount,
+      price: customIndices.find(i => i.id === indexId)?.currentValue || 0,
+      timestamp: new Date(),
+      status: 'completed',
+      txHash: generateMockTxHash()
+    }
+    setIndexTrades(prev => [newTrade, ...prev])
+  }
+
+  const handleAssetTrade = (assetId: string, amount: number, type: 'buy' | 'sell') => {
+    const newTransaction: Transaction = {
+      id: Date.now().toString(),
+      type: 'swap',
+      asset: assetId,
+      amount: type === 'buy' ? amount : -amount,
+      timestamp: new Date(),
+      status: 'completed',
+      txHash: generateMockTxHash()
+    }
+    setTransactions(prev => [newTransaction, ...prev])
+  }
+
   const filteredAssets = tokenizedAssets.filter(asset => {
     const matchesSearch = asset.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          asset.symbol.toLowerCase().includes(searchTerm.toLowerCase())
@@ -88,6 +121,17 @@ export default function SwapPage() {
     { value: 'startup', label: 'Early Stage Startups' }
   ]
 
+  const filteredIndices = customIndices.filter(index => {
+    const matchesSearch = index.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         index.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesCategory = selectedCategory === 'all' || 
+                           (selectedCategory === 'stock' && index.category === 'stocks') ||
+                           (selectedCategory === 'startup' && index.category === 'startups') ||
+                           (selectedCategory === 'commodity' && index.category === 'commodities') ||
+                           (selectedCategory === 'private-company' && index.category === 'mixed')
+    return matchesSearch && matchesCategory
+  })
+
   return (
     <div className="min-h-screen bg-vaulto-dark relative overflow-hidden">
       {/* Subtle Background Pattern */}
@@ -101,20 +145,20 @@ export default function SwapPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-8">
+          <div className="flex items-center justify-between h-12">
+            <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-32 h-20">
+                <div className="relative w-16 h-6">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority
                   />
                 </div>
               </div>
-              <nav className="flex items-center space-x-6">
+              <nav className="flex items-center space-x-4">
                 <Link
                   href="/"
                   className={`text-sm font-medium transition-all duration-200 ${
@@ -183,87 +227,118 @@ export default function SwapPage() {
           <h1 className="text-4xl font-bold text-vaulto-light mb-4">
             Investment Opportunities
           </h1>
-          <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto">
-            Discover and invest in tokenized assets including stocks, commodities, pre-IPO companies, and early-stage startups. 
-            Trade with real-time prices and market data.
+          <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto mb-6">
+            Discover and invest in tokenized assets and custom indices. Trade individual stocks, startups, commodities, 
+            or diversify with professionally managed index funds.
           </p>
-        </div>
-
-        {/* Filters */}
-        <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6 mb-8">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="p-2 bg-vaulto-primary/20 rounded-lg">
-              <Filter className="w-5 h-5 text-vaulto-primary" />
-            </div>
-            <h3 className="text-xl font-bold text-vaulto-light">Filter Assets</h3>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-vaulto-light/70" />
-              <input
-                type="text"
-                placeholder="Search assets..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-vaulto-dark border border-vaulto-light/20 rounded-lg text-vaulto-light placeholder-vaulto-light/50 focus:outline-none focus:border-vaulto-primary"
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-3 bg-vaulto-dark border border-vaulto-light/20 rounded-lg text-vaulto-light focus:outline-none focus:border-vaulto-primary"
-              >
-                {categories.map(category => (
-                  <option key={category.value} value={category.value}>
-                    {category.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Asset List Header */}
-        <div className="bg-gradient-to-r from-vaulto-primary/10 to-vaulto-secondary/10 border border-vaulto-primary/30 rounded-xl p-6 mb-6 hidden md:block">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="p-2 bg-vaulto-primary/20 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-vaulto-primary" />
-            </div>
-            <h3 className="text-xl font-bold text-vaulto-light">Available Assets</h3>
-          </div>
-          <div className="grid grid-cols-12 gap-4 items-center text-vaulto-light/80 text-sm font-semibold">
-            <div className="col-span-3 flex items-center space-x-2">
-              <Target className="w-4 h-4 text-vaulto-primary" />
-              <span>Asset</span>
-            </div>
-            <div className="col-span-3 text-right flex items-center justify-end space-x-2">
-              <span>Price</span>
-              <TrendingUp className="w-4 h-4 text-vaulto-primary" />
-            </div>
-            <div className="col-span-3 text-right flex items-center justify-end space-x-2">
-              <span>24h Volume</span>
-              <Activity className="w-4 h-4 text-vaulto-primary" />
-            </div>
-            <div className="col-span-3 text-right flex items-center justify-end space-x-2">
-              <span>Market Cap</span>
-              <Target className="w-4 h-4 text-vaulto-primary" />
-            </div>
+          
+          {/* View Toggle */}
+          <div className="flex items-center justify-center space-x-4">
+            <button
+              onClick={() => setActiveView('dashboard')}
+              className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                activeView === 'dashboard'
+                  ? 'bg-vaulto-primary text-vaulto-dark'
+                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
+              }`}
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveView('indices')}
+              className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                activeView === 'indices'
+                  ? 'bg-vaulto-primary text-vaulto-dark'
+                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
+              }`}
+            >
+              Custom Indices
+            </button>
+            <button
+              onClick={() => setActiveView('assets')}
+              className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                activeView === 'assets'
+                  ? 'bg-vaulto-primary text-vaulto-dark'
+                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
+              }`}
+            >
+              Individual Assets
+            </button>
           </div>
         </div>
 
-        {/* Asset List */}
-        <div className="space-y-3 mb-12">
-          {filteredAssets.map((asset) => (
-            <AssetListItem
-              key={asset.id}
-              asset={asset}
-              onBuy={(amount) => handleBuy(asset.symbol, amount)}
-              onSell={(amount) => handleSell(asset.symbol, amount)}
-              isWalletConnected={walletState.isConnected}
-            />
-          ))}
-        </div>
+        {/* Content based on active view */}
+        {activeView === 'dashboard' && (
+          <TradingDashboard
+            indices={customIndices}
+            assets={tokenizedAssets}
+            onIndexInvest={handleIndexInvest}
+            onAssetTrade={handleAssetTrade}
+            isWalletConnected={walletState.isConnected}
+          />
+        )}
+
+        {activeView === 'indices' && (
+          <>
+            {/* Index Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {customIndices.map((index) => (
+                <IndexCard
+                  key={index.id}
+                  index={index}
+                  onInvest={(amount) => handleIndexInvest(index.id, amount)}
+                  onExplain={handleExplain}
+                  isWalletConnected={walletState.isConnected}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {activeView === 'assets' && (
+          <>
+            {/* Asset List Header */}
+            <div className="bg-gradient-to-r from-vaulto-primary/10 to-vaulto-secondary/10 border border-vaulto-primary/30 rounded-xl p-6 mb-6 hidden md:block">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="p-2 bg-vaulto-primary/20 rounded-lg">
+                  <TrendingUp className="w-5 h-5 text-vaulto-primary" />
+                </div>
+                <h3 className="text-xl font-bold text-vaulto-light">Available Assets</h3>
+              </div>
+              <div className="grid grid-cols-12 gap-4 items-center text-vaulto-light/80 text-sm font-semibold">
+                <div className="col-span-3 flex items-center space-x-2">
+                  <Target className="w-4 h-4 text-vaulto-primary" />
+                  <span>Asset</span>
+                </div>
+                <div className="col-span-3 text-right flex items-center justify-end space-x-2">
+                  <span>Price</span>
+                  <TrendingUp className="w-4 h-4 text-vaulto-primary" />
+                </div>
+                <div className="col-span-3 text-right flex items-center justify-end space-x-2">
+                  <span>24h Volume</span>
+                  <Activity className="w-4 h-4 text-vaulto-primary" />
+                </div>
+                <div className="col-span-3 text-right flex items-center justify-end space-x-2">
+                  <span>Market Cap</span>
+                  <Target className="w-4 h-4 text-vaulto-primary" />
+                </div>
+              </div>
+            </div>
+
+            {/* Asset List */}
+            <div className="space-y-3 mb-12">
+              {tokenizedAssets.map((asset) => (
+                <AssetListItem
+                  key={asset.id}
+                  asset={asset}
+                  onBuy={(amount) => handleBuy(asset.symbol, amount)}
+                  onSell={(amount) => handleSell(asset.symbol, amount)}
+                  isWalletConnected={walletState.isConnected}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
       </main>
 
@@ -274,6 +349,15 @@ export default function SwapPage() {
         context={aiContext}
         initialQuestion={aiQuestion}
       />
+
+      {/* Index Details Modal */}
+      {selectedIndex && (
+        <IndexDetailsModal
+          index={selectedIndex}
+          isOpen={!!selectedIndex}
+          onClose={() => setSelectedIndex(null)}
+        />
+      )}
     </div>
   )
 }

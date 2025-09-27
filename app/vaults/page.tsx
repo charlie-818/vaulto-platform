@@ -111,20 +111,20 @@ export default function VaultsPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-8">
+          <div className="flex items-center justify-between h-12">
+            <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-32 h-20">
+                <div className="relative w-16 h-6">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority
                   />
                 </div>
               </div>
-              <nav className="flex items-center space-x-6">
+              <nav className="flex items-center space-x-4">
                 <Link
                   href="/"
                   className={`text-sm font-medium transition-all duration-200 ${
@@ -206,7 +206,7 @@ export default function VaultsPage() {
             href="https://vaulto.holdings"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-3 bg-gradient-to-r from-vaulto-primary to-vaulto-secondary text-vaulto-dark font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center space-x-3 bg-gradient-to-r from-vaulto-primary/80 to-vaulto-primary/60 text-vaulto-dark font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
             <div className="p-2 bg-vaulto-dark/20 rounded-lg">
               <ExternalLink className="w-5 h-5" />

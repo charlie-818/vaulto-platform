@@ -23,6 +23,16 @@ export interface TokenizedAsset {
   volume24h?: number;
   marketCap?: number;
   category: string;
+  priceHistory?: PriceData[];
+}
+
+export interface PriceData {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume?: number;
 }
 
 export interface Transaction {
@@ -103,4 +113,51 @@ export interface MarketInsight {
   confidence: number;
   source: string;
   timestamp: Date;
+}
+
+export interface CustomIndex {
+  id: string;
+  name: string;
+  symbol: string;
+  description: string;
+  category: 'stocks' | 'startups' | 'commodities' | 'mixed';
+  currentValue: number;
+  change24h: number;
+  change7d: number;
+  change30d: number;
+  totalValueLocked: number;
+  volume24h: number;
+  assetCount: number;
+  assets: {
+    id: string;
+    weight: number; // Percentage weight in the index
+    asset: TokenizedAsset;
+  }[];
+  rebalancingFrequency: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+  lastRebalanced: Date;
+  nextRebalancing: Date;
+  performanceHistory: {
+    period: string;
+    return: number;
+    volatility: number;
+  }[];
+  fees: {
+    managementFee: number; // Annual percentage
+    performanceFee: number; // Percentage of gains
+  };
+  contractAddress: string;
+  color: string;
+  tags: string[];
+  priceHistory?: PriceData[];
+}
+
+export interface IndexTrade {
+  id: string;
+  type: 'buy' | 'sell';
+  indexId: string;
+  amount: number; // Amount of index tokens
+  price: number; // Price per index token
+  timestamp: Date;
+  status: 'pending' | 'completed' | 'failed';
+  txHash?: string;
 }

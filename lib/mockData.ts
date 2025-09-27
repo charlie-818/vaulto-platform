@@ -1,4 +1,38 @@
-import { Stablecoin, TokenizedAsset, Transaction, Vault, PredictionMarket, MarketInsight } from '@/types'
+import { Stablecoin, TokenizedAsset, Transaction, Vault, PredictionMarket, MarketInsight, CustomIndex, PriceData } from '@/types'
+
+// Generate realistic price history data
+const generatePriceHistory = (currentPrice: number, days: number = 30): PriceData[] => {
+  const data: PriceData[] = []
+  let price = currentPrice * 0.8 // Start 20% lower
+  
+  for (let i = days; i >= 0; i--) {
+    const date = new Date()
+    date.setDate(date.getDate() - i)
+    const time = Math.floor(date.getTime() / 1000)
+    
+    // Generate realistic OHLC data with some volatility
+    const volatility = 0.02 + Math.random() * 0.03 // 2-5% daily volatility
+    const change = (Math.random() - 0.5) * volatility
+    const open = price
+    const close = price * (1 + change)
+    const high = Math.max(open, close) * (1 + Math.random() * 0.01)
+    const low = Math.min(open, close) * (1 - Math.random() * 0.01)
+    const volume = Math.floor(Math.random() * 1000000) + 500000
+    
+    data.push({
+      time,
+      open: Number(open.toFixed(2)),
+      high: Number(high.toFixed(2)),
+      low: Number(low.toFixed(2)),
+      close: Number(close.toFixed(2)),
+      volume
+    })
+    
+    price = close
+  }
+  
+  return data
+}
 
 export const stablecoins: Stablecoin[] = [
   {
@@ -42,7 +76,7 @@ export const tokenizedAssets: TokenizedAsset[] = [
   {
     id: 'tsla',
     name: 'Tesla Inc.',
-    symbol: 'tTSLA',
+    symbol: 'vltTSLA',
     type: 'stock',
     description: 'Tokenized Tesla stock with real-time price tracking',
     contractAddress: '0x4567890123456789012345678901234567890123',
@@ -50,12 +84,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 2.34,
     volume24h: 125000000,
     marketCap: 780000000000,
-    category: 'Technology'
+    category: 'Technology',
+    priceHistory: generatePriceHistory(245.67)
   },
   {
     id: 'aapl',
     name: 'Apple Inc.',
-    symbol: 'tAAPL',
+    symbol: 'vltAAPL',
     type: 'stock',
     description: 'Tokenized Apple stock with dividend distribution',
     contractAddress: '0x5678901234567890123456789012345678901234',
@@ -63,38 +98,41 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: -1.12,
     volume24h: 89000000,
     marketCap: 2950000000000,
-    category: 'Technology'
+    category: 'Technology',
+    priceHistory: generatePriceHistory(189.23)
   },
   // Tokenized Commodities
   {
     id: 'gold',
     name: 'Gold Token',
-    symbol: 'tGOLD',
+    symbol: 'vltGOLD',
     type: 'commodity',
     description: 'Tokenized gold with physical backing',
     contractAddress: '0x6789012345678901234567890123456789012345',
     currentPrice: 1987.45,
     change24h: 0.87,
     volume24h: 45000000,
-    category: 'Precious Metals'
+    category: 'Precious Metals',
+    priceHistory: generatePriceHistory(1987.45)
   },
   {
     id: 'oil',
     name: 'Crude Oil Token',
-    symbol: 'tOIL',
+    symbol: 'vltOIL',
     type: 'commodity',
     description: 'Tokenized WTI crude oil futures',
     contractAddress: '0x7890123456789012345678901234567890123456',
     currentPrice: 78.92,
     change24h: -2.15,
     volume24h: 32000000,
-    category: 'Energy'
+    category: 'Energy',
+    priceHistory: generatePriceHistory(78.92)
   },
   // Tokenized Private Companies
   {
     id: 'openai',
     name: 'OpenAI',
-    symbol: 'tOPENAI',
+    symbol: 'vltOPENAI',
     type: 'private-company',
     description: 'Pre-IPO tokenized shares of OpenAI',
     contractAddress: '0x8901234567890123456789012345678901234567',
@@ -102,12 +140,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 5.67,
     volume24h: 15000000,
     marketCap: 80000000000,
-    category: 'AI/Technology'
+    category: 'AI/Technology',
+    priceHistory: generatePriceHistory(125.50)
   },
   {
     id: 'stripe',
     name: 'Stripe',
-    symbol: 'tSTRIPE',
+    symbol: 'vltSTRIPE',
     type: 'private-company',
     description: 'Pre-IPO tokenized shares of Stripe',
     contractAddress: '0x9012345678901234567890123456789012345678',
@@ -115,13 +154,14 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 1.23,
     volume24h: 12000000,
     marketCap: 95000000000,
-    category: 'Fintech'
+    category: 'Fintech',
+    priceHistory: generatePriceHistory(89.75)
   },
   // Early Stage Startups
   {
     id: 'anthropic',
     name: 'Anthropic',
-    symbol: 'tANTHROPIC',
+    symbol: 'vltANTHROPIC',
     type: 'startup',
     description: 'Early-stage AI safety company developing Claude AI',
     contractAddress: '0xa123456789012345678901234567890123456789',
@@ -129,12 +169,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 8.92,
     volume24h: 8500000,
     marketCap: 15000000000,
-    category: 'AI/Safety'
+    category: 'AI/Safety',
+    priceHistory: generatePriceHistory(12.45)
   },
   {
     id: 'midjourney',
     name: 'Midjourney',
-    symbol: 'tMIDJOURNEY',
+    symbol: 'vltMIDJOURNEY',
     type: 'startup',
     description: 'AI-powered image generation platform',
     contractAddress: '0xb234567890123456789012345678901234567890',
@@ -142,12 +183,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 12.34,
     volume24h: 6200000,
     marketCap: 8000000000,
-    category: 'AI/Creative'
+    category: 'AI/Creative',
+    priceHistory: generatePriceHistory(8.75)
   },
   {
     id: 'runway',
     name: 'Runway',
-    symbol: 'tRUNWAY',
+    symbol: 'vltRUNWAY',
     type: 'startup',
     description: 'AI video editing and generation platform',
     contractAddress: '0xc345678901234567890123456789012345678901',
@@ -155,12 +197,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 6.78,
     volume24h: 4800000,
     marketCap: 12000000000,
-    category: 'AI/Video'
+    category: 'AI/Video',
+    priceHistory: generatePriceHistory(15.20)
   },
   {
     id: 'character-ai',
     name: 'Character.AI',
-    symbol: 'tCHARACTER',
+    symbol: 'vltCHARACTER',
     type: 'startup',
     description: 'Conversational AI platform for character interactions',
     contractAddress: '0xd456789012345678901234567890123456789012',
@@ -168,12 +211,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 15.67,
     volume24h: 3200000,
     marketCap: 5000000000,
-    category: 'AI/Conversational'
+    category: 'AI/Conversational',
+    priceHistory: generatePriceHistory(6.90)
   },
   {
     id: 'perplexity',
     name: 'Perplexity AI',
-    symbol: 'tPERPLEXITY',
+    symbol: 'vltPERPLEXITY',
     type: 'startup',
     description: 'AI-powered search engine and research assistant',
     contractAddress: '0xe567890123456789012345678901234567890123',
@@ -181,12 +225,13 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 4.56,
     volume24h: 7500000,
     marketCap: 18000000000,
-    category: 'AI/Search'
+    category: 'AI/Search',
+    priceHistory: generatePriceHistory(22.10)
   },
   {
     id: 'hugging-face',
     name: 'Hugging Face',
-    symbol: 'tHUGGING',
+    symbol: 'vltHUGGING',
     type: 'startup',
     description: 'Open-source AI model platform and community',
     contractAddress: '0xf678901234567890123456789012345678901234',
@@ -194,7 +239,8 @@ export const tokenizedAssets: TokenizedAsset[] = [
     change24h: 7.89,
     volume24h: 6800000,
     marketCap: 14000000000,
-    category: 'AI/Open Source'
+    category: 'AI/Open Source',
+    priceHistory: generatePriceHistory(18.75)
   }
 ]
 
@@ -662,6 +708,278 @@ export const marketInsights: MarketInsight[] = [
     confidence: 0.74,
     source: 'L2Beat',
     timestamp: new Date(Date.now() - 10800000)
+  }
+]
+
+export const customIndices: CustomIndex[] = [
+  {
+    id: 'tech-giants-index',
+    name: 'Tech Giants Index',
+    symbol: 'vltTECH',
+    description: 'Diversified exposure to major technology companies including Apple, Tesla, and other blue-chip tech stocks',
+    category: 'stocks',
+    currentValue: 245.67,
+    change24h: 2.34,
+    change7d: 5.67,
+    change30d: 12.45,
+    totalValueLocked: 12500000,
+    volume24h: 2500000,
+    assetCount: 5,
+    assets: [
+      {
+        id: 'aapl',
+        weight: 35,
+        asset: tokenizedAssets.find(a => a.id === 'aapl')!
+      },
+      {
+        id: 'tsla',
+        weight: 30,
+        asset: tokenizedAssets.find(a => a.id === 'tsla')!
+      },
+      {
+        id: 'openai',
+        weight: 20,
+        asset: tokenizedAssets.find(a => a.id === 'openai')!
+      },
+      {
+        id: 'stripe',
+        weight: 10,
+        asset: tokenizedAssets.find(a => a.id === 'stripe')!
+      },
+      {
+        id: 'anthropic',
+        weight: 5,
+        asset: tokenizedAssets.find(a => a.id === 'anthropic')!
+      }
+    ],
+    rebalancingFrequency: 'monthly',
+    lastRebalanced: new Date(Date.now() - 86400000 * 15),
+    nextRebalancing: new Date(Date.now() + 86400000 * 15),
+    performanceHistory: [
+      { period: '1M', return: 12.45, volatility: 18.2 },
+      { period: '3M', return: 28.67, volatility: 22.1 },
+      { period: '6M', return: 45.23, volatility: 19.8 },
+      { period: '1Y', return: 78.91, volatility: 24.5 }
+    ],
+    fees: {
+      managementFee: 0.5,
+      performanceFee: 10
+    },
+    contractAddress: '0x1234567890123456789012345678901234567890',
+    color: 'primary',
+    tags: ['Technology', 'Blue Chip', 'Diversified'],
+    priceHistory: generatePriceHistory(245.67)
+  },
+  {
+    id: 'ai-startups-index',
+    name: 'AI Startups Index',
+    symbol: 'vltAI',
+    description: 'High-growth AI startups and emerging technology companies with exponential potential',
+    category: 'startups',
+    currentValue: 156.78,
+    change24h: 8.92,
+    change7d: 15.67,
+    change30d: 42.18,
+    totalValueLocked: 8500000,
+    volume24h: 1800000,
+    assetCount: 6,
+    assets: [
+      {
+        id: 'anthropic',
+        weight: 25,
+        asset: tokenizedAssets.find(a => a.id === 'anthropic')!
+      },
+      {
+        id: 'midjourney',
+        weight: 20,
+        asset: tokenizedAssets.find(a => a.id === 'midjourney')!
+      },
+      {
+        id: 'runway',
+        weight: 20,
+        asset: tokenizedAssets.find(a => a.id === 'runway')!
+      },
+      {
+        id: 'character-ai',
+        weight: 15,
+        asset: tokenizedAssets.find(a => a.id === 'character-ai')!
+      },
+      {
+        id: 'perplexity',
+        weight: 12,
+        asset: tokenizedAssets.find(a => a.id === 'perplexity')!
+      },
+      {
+        id: 'hugging-face',
+        weight: 8,
+        asset: tokenizedAssets.find(a => a.id === 'hugging-face')!
+      }
+    ],
+    rebalancingFrequency: 'quarterly',
+    lastRebalanced: new Date(Date.now() - 86400000 * 45),
+    nextRebalancing: new Date(Date.now() + 86400000 * 45),
+    performanceHistory: [
+      { period: '1M', return: 42.18, volatility: 35.6 },
+      { period: '3M', return: 89.45, volatility: 42.1 },
+      { period: '6M', return: 156.78, volatility: 38.9 },
+      { period: '1Y', return: 278.34, volatility: 45.2 }
+    ],
+    fees: {
+      managementFee: 1.0,
+      performanceFee: 15
+    },
+    contractAddress: '0x2345678901234567890123456789012345678901',
+    color: 'primary',
+    tags: ['AI', 'Startups', 'High Growth', 'Emerging Tech'],
+    priceHistory: generatePriceHistory(156.78)
+  },
+  {
+    id: 'commodities-basket',
+    name: 'Commodities Basket',
+    symbol: 'vltCOMM',
+    description: 'Diversified exposure to precious metals, energy, and agricultural commodities',
+    category: 'commodities',
+    currentValue: 1234.56,
+    change24h: -0.87,
+    change7d: 2.34,
+    change30d: 5.67,
+    totalValueLocked: 3200000,
+    volume24h: 850000,
+    assetCount: 4,
+    assets: [
+      {
+        id: 'gold',
+        weight: 40,
+        asset: tokenizedAssets.find(a => a.id === 'gold')!
+      },
+      {
+        id: 'oil',
+        weight: 35,
+        asset: tokenizedAssets.find(a => a.id === 'oil')!
+      },
+      {
+        id: 'silver',
+        weight: 15,
+        asset: {
+          id: 'silver',
+          name: 'Silver Token',
+          symbol: 'vltSILVER',
+          type: 'commodity',
+          description: 'Tokenized silver with physical backing',
+          contractAddress: '0x3456789012345678901234567890123456789012',
+          currentPrice: 28.45,
+          change24h: 1.23,
+          volume24h: 18000000,
+          category: 'Precious Metals'
+        }
+      },
+      {
+        id: 'copper',
+        weight: 10,
+        asset: {
+          id: 'copper',
+          name: 'Copper Token',
+          symbol: 'vltCOPPER',
+          type: 'commodity',
+          description: 'Tokenized copper futures with industrial exposure',
+          contractAddress: '0x4567890123456789012345678901234567890123',
+          currentPrice: 4.12,
+          change24h: -0.45,
+          volume24h: 12000000,
+          category: 'Industrial Metals'
+        }
+      }
+    ],
+    rebalancingFrequency: 'weekly',
+    lastRebalanced: new Date(Date.now() - 86400000 * 3),
+    nextRebalancing: new Date(Date.now() + 86400000 * 4),
+    performanceHistory: [
+      { period: '1M', return: 5.67, volatility: 12.3 },
+      { period: '3M', return: 12.45, volatility: 15.8 },
+      { period: '6M', return: 18.92, volatility: 14.2 },
+      { period: '1Y', return: 22.34, volatility: 16.7 }
+    ],
+    fees: {
+      managementFee: 0.3,
+      performanceFee: 8
+    },
+    contractAddress: '0x3456789012345678901234567890123456789012',
+    color: 'primary',
+    tags: ['Commodities', 'Diversified', 'Inflation Hedge'],
+    priceHistory: generatePriceHistory(1234.56)
+  },
+  {
+    id: 'mixed-growth-index',
+    name: 'Mixed Growth Index',
+    symbol: 'vltGROWTH',
+    description: 'Balanced portfolio combining tech stocks, AI startups, and commodities for diversified growth',
+    category: 'mixed',
+    currentValue: 189.23,
+    change24h: 3.45,
+    change7d: 8.92,
+    change30d: 18.67,
+    totalValueLocked: 9800000,
+    volume24h: 1650000,
+    assetCount: 8,
+    assets: [
+      {
+        id: 'aapl',
+        weight: 20,
+        asset: tokenizedAssets.find(a => a.id === 'aapl')!
+      },
+      {
+        id: 'tsla',
+        weight: 15,
+        asset: tokenizedAssets.find(a => a.id === 'tsla')!
+      },
+      {
+        id: 'anthropic',
+        weight: 15,
+        asset: tokenizedAssets.find(a => a.id === 'anthropic')!
+      },
+      {
+        id: 'gold',
+        weight: 15,
+        asset: tokenizedAssets.find(a => a.id === 'gold')!
+      },
+      {
+        id: 'midjourney',
+        weight: 10,
+        asset: tokenizedAssets.find(a => a.id === 'midjourney')!
+      },
+      {
+        id: 'runway',
+        weight: 10,
+        asset: tokenizedAssets.find(a => a.id === 'runway')!
+      },
+      {
+        id: 'oil',
+        weight: 10,
+        asset: tokenizedAssets.find(a => a.id === 'oil')!
+      },
+      {
+        id: 'openai',
+        weight: 5,
+        asset: tokenizedAssets.find(a => a.id === 'openai')!
+      }
+    ],
+    rebalancingFrequency: 'monthly',
+    lastRebalanced: new Date(Date.now() - 86400000 * 12),
+    nextRebalancing: new Date(Date.now() + 86400000 * 18),
+    performanceHistory: [
+      { period: '1M', return: 18.67, volatility: 22.4 },
+      { period: '3M', return: 34.56, volatility: 25.8 },
+      { period: '6M', return: 52.89, volatility: 23.1 },
+      { period: '1Y', return: 89.12, volatility: 26.7 }
+    ],
+    fees: {
+      managementFee: 0.7,
+      performanceFee: 12
+    },
+    contractAddress: '0x4567890123456789012345678901234567890123',
+    color: 'primary',
+    tags: ['Diversified', 'Growth', 'Balanced', 'Multi-Asset'],
+    priceHistory: generatePriceHistory(189.23)
   }
 ]
 

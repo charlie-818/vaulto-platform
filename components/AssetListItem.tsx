@@ -6,6 +6,7 @@ import { TrendingUp, TrendingDown, ChevronDown, ChevronUp } from 'lucide-react'
 import { TokenizedAsset } from '@/types'
 import { formatCurrency, formatPercentage, formatLargeNumber } from '@/lib/utils'
 import { getCompanyLogo } from '@/lib/logoMapping'
+import PriceChart from './PriceChart'
 
 interface AssetListItemProps {
   asset: TokenizedAsset
@@ -153,6 +154,18 @@ export default function AssetListItem({ asset, onBuy, onSell, isWalletConnected 
       {/* Expanded Section */}
       {isExpanded && (
         <div className="border-t border-vaulto-primary/20 p-4 bg-vaulto-dark/30">
+          {/* Price Chart */}
+          {asset.priceHistory && asset.priceHistory.length > 0 && (
+            <div className="mb-6">
+              <PriceChart 
+                data={asset.priceHistory} 
+                symbol={asset.symbol}
+                height={300}
+                className="w-full"
+              />
+            </div>
+          )}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Asset Details */}
             <div className="space-y-4">

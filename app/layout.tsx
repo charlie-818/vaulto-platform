@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Vaulto - AI-Powered Stablecoin Platform',
   description: 'Mint stablecoins, swap tokenized assets, and get AI-powered investment guidance',
+  icons: {
+    icon: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
