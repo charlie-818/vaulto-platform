@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, ExternalLink } from 'lucide-react'
+import { TrendingUp, Filter, Search, ExternalLink, Target } from 'lucide-react'
 import AIAssistant from '@/components/AIAssistant'
 import VaultCard from '@/components/VaultCard'
 import { vaults, mockTransactions } from '@/lib/mockData'
@@ -144,7 +144,8 @@ export default function VaultsPage() {
               className="w-full pl-10 pr-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light placeholder-vaulto-light/50 focus:outline-none focus:border-vaulto-primary"
             />
           </div>
-          <div>
+          <div className="flex items-center space-x-2">
+            <Filter className="w-5 h-5 text-vaulto-light/70" />
             <select
               value={selectedRisk}
               onChange={(e) => setSelectedRisk(e.target.value)}
@@ -157,7 +158,8 @@ export default function VaultsPage() {
               ))}
             </select>
           </div>
-          <div>
+          <div className="flex items-center space-x-2">
+            <Target className="w-5 h-5 text-vaulto-light/70" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
