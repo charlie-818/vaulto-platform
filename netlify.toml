@@ -1,21 +1,19 @@
 [build]
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18"
-  NETLIFY = "true"
-  OPENAI_API_KEY = ""
+
+[functions]
+  directory = ".next/server"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-
-# Next.js specific redirects for SPA routing
-[[redirects]]
-  from = "/api/*"
-  to = "/api/:splat"
   status = 200
 
 # Static assets

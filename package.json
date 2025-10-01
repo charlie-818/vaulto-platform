@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.13.3",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.0.0",
     "lightweight-charts": "^5.0.8",
