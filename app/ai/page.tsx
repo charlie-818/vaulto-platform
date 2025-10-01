@@ -118,7 +118,7 @@ export default function AIPage() {
         </div>
 
         {/* AI Search Bar */}
-        <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
           <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="p-2 bg-vaulto-primary/20 rounded-lg">
@@ -153,8 +153,8 @@ export default function AIPage() {
         </div>
 
         {/* Quick Questions */}
-        <div className="max-w-4xl mx-auto mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {quickQuestions.map((question, index) => (
               <button
                 key={index}
@@ -175,7 +175,7 @@ export default function AIPage() {
         </div>
 
         {/* Educational Videos Section */}
-        <div className="max-w-4xl mx-auto mt-16">
+        <div className="mb-8">
 
           {/* Featured Video Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
