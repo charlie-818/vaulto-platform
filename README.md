@@ -5,10 +5,12 @@ A modern Web3 platform for minting stablecoins and swapping tokenized assets wit
 ## Features
 
 ### 🤖 AI Assistant
-- Dedicated side window that launches via "Explain" buttons throughout the application
+- Real-time ChatGPT integration with streaming responses
+- Markdown formatting for rich, structured content
+- Dedicated modal that launches via "Explain" buttons throughout the application
 - Provides natural language answers to investment, product, and platform questions
-- Minimally intrusive design that doesn't consume main screen real estate
 - Context-aware responses based on user interactions
+- Professional styling with auto-scroll and typing indicators
 
 ### 💰 Stablecoin Minting (Homepage)
 - **vltUSD**: Fiat-backed stablecoin with full transparency
@@ -42,8 +44,10 @@ A modern Web3 platform for minting stablecoins and swapping tokenized assets wit
 
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS with custom design system
+- **Styling**: Tailwind CSS with custom design system and Typography plugin
 - **Icons**: Lucide React
+- **AI Integration**: OpenAI GPT-3.5-turbo with streaming
+- **Markdown**: ReactMarkdown with GitHub Flavored Markdown
 - **State Management**: React hooks (useState)
 
 ## Getting Started
@@ -53,12 +57,19 @@ A modern Web3 platform for minting stablecoins and swapping tokenized assets wit
    npm install
    ```
 
-2. **Run the development server**:
+2. **Set up environment variables**:
+   Create a `.env.local` file in the root directory:
+   ```bash
+   # OpenAI API Configuration
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+3. **Run the development server**:
    ```bash
    npm run dev
    ```
 
-3. **Open your browser**:
+4. **Open your browser**:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## Deployment
