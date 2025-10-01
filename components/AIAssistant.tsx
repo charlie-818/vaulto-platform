@@ -46,6 +46,11 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
       })
 
       if (!response.ok) {
+        if (response.status === 404 || response.status === 503) {
+          // API route not available - provide fallback response
+          onChunk('I apologize, but the AI service is currently not available. This might be because the service is in maintenance mode or the API key is not configured. Please try again later or contact support for assistance.')
+          return
+        }
         throw new Error('Failed to get AI response')
       }
 

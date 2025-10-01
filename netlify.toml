@@ -4,6 +4,8 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  NETLIFY = "true"
+  OPENAI_API_KEY = ""
 
 [[redirects]]
   from = "/*"
