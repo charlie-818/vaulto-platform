@@ -66,12 +66,9 @@ export default function IndexCard({ index, onInvest, onExplain, isWalletConnecte
     <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-5 hover:border-vaulto-primary/50 transition-colors">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center space-x-3">
-          {getCategoryIcon()}
-          <div>
-            <h3 className="text-lg font-bold text-vaulto-light">{index.name}</h3>
-            <p className="text-vaulto-light/70 text-sm">{index.symbol}</p>
-          </div>
+        <div>
+          <h3 className="text-lg font-bold text-vaulto-light">{index.name}</h3>
+          <p className="text-vaulto-light/70 text-sm">{index.symbol}</p>
         </div>
         <ExplainButton
           context={`${index.name} custom index`}

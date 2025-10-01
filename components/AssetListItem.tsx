@@ -98,15 +98,12 @@ export default function AssetListItem({ asset, onBuy, onSell, isWalletConnected 
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {/* Asset Info */}
-        <div className="col-span-12 md:col-span-3 flex items-center space-x-3">
-          {getAssetLogo()}
-          <div>
-            <h3 className="text-lg font-semibold text-vaulto-light">{asset.name}</h3>
-            <p className="text-vaulto-light/70 text-sm">{asset.symbol}</p>
-            <span className={`text-xs font-medium ${getTypeColor()}`}>
-              {asset.type.replace('-', ' ').toUpperCase()}
-            </span>
-          </div>
+        <div className="col-span-12 md:col-span-3">
+          <h3 className="text-lg font-semibold text-vaulto-light">{asset.name}</h3>
+          <p className="text-vaulto-light/70 text-sm">{asset.symbol}</p>
+          <span className={`text-xs font-medium ${getTypeColor()}`}>
+            {asset.type.replace('-', ' ').toUpperCase()}
+          </span>
         </div>
 
         {/* Price */}

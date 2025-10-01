@@ -83,12 +83,9 @@ export default function VaultCard({ vault, onInvest, isWalletConnected }: VaultC
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <div className="flex items-center space-x-3 mb-2">
-            {getVaultLogo()}
-            <div>
-              <h3 className="text-xl font-bold text-vaulto-light">{vault.name}</h3>
-              <span className="text-sm text-vaulto-light/70 font-mono">{vault.symbol}</span>
-            </div>
+          <div className="mb-2">
+            <h3 className="text-xl font-bold text-vaulto-light">{vault.name}</h3>
+            <span className="text-sm text-vaulto-light/70 font-mono">{vault.symbol}</span>
           </div>
           <p className="text-vaulto-light/70 text-sm mb-3">{vault.description}</p>
           <div className="flex items-center space-x-4 text-sm">

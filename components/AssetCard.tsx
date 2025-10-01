@@ -83,12 +83,9 @@ export default function AssetCard({ asset, onSwap, onExplain, isWalletConnected 
     <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6 hover:border-vaulto-primary/50 transition-colors">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          {getAssetLogo()}
-          <div>
-            <h3 className="text-xl font-bold text-vaulto-light">{asset.name}</h3>
-            <p className="text-vaulto-light/70 text-sm">{asset.symbol}</p>
-          </div>
+        <div>
+          <h3 className="text-xl font-bold text-vaulto-light">{asset.name}</h3>
+          <p className="text-vaulto-light/70 text-sm">{asset.symbol}</p>
         </div>
         <ExplainButton
           context={`${asset.name} tokenized asset`}
