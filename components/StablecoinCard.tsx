@@ -197,13 +197,13 @@ export default function StablecoinCard({
       {activeTab === 'mint' ? (
         <div className="space-y-4">
           {/* Safety Warning */}
-          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+          <div className="bg-yellow-500/5 border border-yellow-500/10 rounded-lg p-2">
             <div className="flex items-start space-x-2">
-              <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <div className="text-sm">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <div className="text-xs">
                 <div className="text-yellow-400 font-medium mb-1">Risk Warning</div>
-                <div className="text-yellow-300/80">
-                  Minting {stablecoin.symbol} involves smart contract risks. Ensure you understand the collateralization requirements and liquidation risks before proceeding.
+                <div className="text-yellow-300/70">
+                  Minting {stablecoin.symbol} involves smart contract risks.
                 </div>
               </div>
             </div>

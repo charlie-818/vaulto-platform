@@ -114,7 +114,7 @@ export default function VaultsPage() {
           <div className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-16 h-6">
+                <div className="relative w-32 h-10">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"

@@ -4,9 +4,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Send, Bot, Search, ExternalLink } from 'lucide-react'
+import { Send, Bot, Search, ExternalLink, Play, Clock, Eye } from 'lucide-react'
 import AIAssistant from '@/components/AIAssistant'
 import WalletButton from '@/components/WalletButton'
+import VideoEmbed from '@/components/VideoEmbed'
 import { WalletState } from '@/types'
 import { generateMockAddress } from '@/lib/utils'
 
@@ -62,6 +63,47 @@ export default function AIPage() {
     "What are the risks of tokenized assets?"
   ]
 
+  // Featured educational videos from VaultoAI channel
+  // Real YouTube videos from @VaultoAI channel with actual titles and descriptions
+  const featuredVideos = [
+    {
+      id: '4YWZ166wdAQ', // https://youtu.be/4YWZ166wdAQ
+      title: 'What are RWAs',
+      description: 'Learn about Real World Assets (RWAs) and how they are being tokenized on blockchain networks.',
+      duration: '12:45',
+      thumbnail: 'https://img.youtube.com/vi/4YWZ166wdAQ/hqdefault.jpg',
+      category: 'RWAs',
+      isNew: true
+    },
+    {
+      id: 'HL0ejk84EAE', // https://youtu.be/HL0ejk84EAE
+      title: 'Ethereum PoS Explained',
+      description: 'Understanding Ethereum\'s transition to Proof of Stake consensus mechanism and its benefits.',
+      duration: '18:32',
+      thumbnail: 'https://img.youtube.com/vi/HL0ejk84EAE/hqdefault.jpg',
+      category: 'Ethereum',
+      isNew: false
+    },
+    {
+      id: 't-tShuw61Jo', // https://youtu.be/t-tShuw61Jo
+      title: 'Fiat vs Stablecoins',
+      description: 'Compare traditional fiat currencies with stablecoins and understand their role in the crypto ecosystem.',
+      duration: '15:28',
+      thumbnail: 'https://img.youtube.com/vi/t-tShuw61Jo/hqdefault.jpg',
+      category: 'Stablecoins',
+      isNew: true
+    },
+    {
+      id: 'v1w3EEqKEYk', // https://youtu.be/v1w3EEqKEYk
+      title: 'Tokenized Wall Street',
+      description: 'Explore how traditional Wall Street assets are being tokenized and made accessible through blockchain.',
+      duration: '21:15',
+      thumbnail: 'https://img.youtube.com/vi/v1w3EEqKEYk/hqdefault.jpg',
+      category: 'Tokenized Assets',
+      isNew: false
+    }
+  ]
+
 
   return (
     <div className="min-h-screen bg-vaulto-dark relative overflow-hidden">
@@ -79,7 +121,7 @@ export default function AIPage() {
           <div className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-16 h-6">
+                <div className="relative w-32 h-10">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"
@@ -221,24 +263,46 @@ export default function AIPage() {
 
         {/* Quick Questions */}
         <div className="max-w-4xl mx-auto mt-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {quickQuestions.map((question, index) => (
               <button
                 key={index}
                 onClick={() => handleAskQuestion(question)}
-                className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-lg p-4 text-left hover:border-vaulto-primary/50 transition-colors group"
+                className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-lg p-3 text-left hover:border-vaulto-primary/50 transition-colors group"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="p-2 bg-vaulto-primary/20 rounded-lg group-hover:bg-vaulto-primary/30 transition-colors">
-                    <Send className="w-4 h-4 text-vaulto-primary" />
+                <div className="flex items-start space-x-2">
+                  <div className="p-1.5 bg-vaulto-primary/20 rounded-md group-hover:bg-vaulto-primary/30 transition-colors flex-shrink-0">
+                    <Send className="w-3 h-3 text-vaulto-primary" />
                   </div>
-                  <p className="text-vaulto-light group-hover:text-vaulto-primary transition-colors">
+                  <p className="text-vaulto-light group-hover:text-vaulto-primary transition-colors text-sm leading-relaxed">
                     {question}
                   </p>
                 </div>
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Educational Videos Section */}
+        <div className="max-w-4xl mx-auto mt-16">
+
+          {/* Featured Video Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {featuredVideos.map((video, index) => (
+              <VideoEmbed
+                key={video.id}
+                videoId={video.id}
+                title={video.title}
+                description={video.description}
+                duration={video.duration}
+                category={video.category}
+                thumbnail={video.thumbnail}
+                isNew={video.isNew}
+                onAskAI={handleAskQuestion}
+              />
+            ))}
+          </div>
+
         </div>
       </main>
 

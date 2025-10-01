@@ -148,7 +148,7 @@ export default function SwapPage() {
           <div className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-16 h-6">
+                <div className="relative w-32 h-10">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"
@@ -280,9 +280,37 @@ export default function SwapPage() {
 
         {activeView === 'indices' && (
           <>
+            {/* Search and Filter */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-vaulto-light/70" />
+                <input
+                  type="text"
+                  placeholder="Search indices..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light placeholder-vaulto-light/50 focus:outline-none focus:border-vaulto-primary"
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Filter className="w-5 h-5 text-vaulto-light/70" />
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light focus:outline-none focus:border-vaulto-primary"
+                >
+                  {categories.map(category => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             {/* Index Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {customIndices.map((index) => (
+              {filteredIndices.map((index) => (
                 <IndexCard
                   key={index.id}
                   index={index}
@@ -292,11 +320,52 @@ export default function SwapPage() {
                 />
               ))}
             </div>
+
+            {/* No Results */}
+            {filteredIndices.length === 0 && (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-vaulto-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-vaulto-light/50" />
+                </div>
+                <h3 className="text-lg font-medium text-vaulto-light mb-2">No indices found</h3>
+                <p className="text-vaulto-light/70">
+                  Try adjusting your search criteria or category filter
+                </p>
+              </div>
+            )}
           </>
         )}
 
         {activeView === 'assets' && (
           <>
+            {/* Search and Filter */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-vaulto-light/70" />
+                <input
+                  type="text"
+                  placeholder="Search assets..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light placeholder-vaulto-light/50 focus:outline-none focus:border-vaulto-primary"
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Filter className="w-5 h-5 text-vaulto-light/70" />
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light focus:outline-none focus:border-vaulto-primary"
+                >
+                  {categories.map(category => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             {/* Asset List Header */}
             <div className="bg-gradient-to-r from-vaulto-primary/10 to-vaulto-secondary/10 border border-vaulto-primary/30 rounded-xl p-6 mb-6 hidden md:block">
               <div className="flex items-center space-x-3 mb-4">
@@ -327,7 +396,7 @@ export default function SwapPage() {
 
             {/* Asset List */}
             <div className="space-y-3 mb-12">
-              {tokenizedAssets.map((asset) => (
+              {filteredAssets.map((asset) => (
                 <AssetListItem
                   key={asset.id}
                   asset={asset}
@@ -337,6 +406,19 @@ export default function SwapPage() {
                 />
               ))}
             </div>
+
+            {/* No Results */}
+            {filteredAssets.length === 0 && (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-vaulto-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 text-vaulto-light/50" />
+                </div>
+                <h3 className="text-lg font-medium text-vaulto-light mb-2">No assets found</h3>
+                <p className="text-vaulto-light/70">
+                  Try adjusting your search criteria or category filter
+                </p>
+              </div>
+            )}
           </>
         )}
 

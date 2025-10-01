@@ -97,3 +97,43 @@ input:focus-visible,
 select:focus-visible {
   outline: none;
 }
+
+/* Video container for responsive YouTube embeds */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000;
+  border-radius: 12px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+}
+
+/* Video hover effects */
+.video-thumbnail {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.video-thumbnail:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 212, 170, 0.15);
+}
+
+/* Gradient text effect for video titles */
+.gradient-text {
+  background: linear-gradient(135deg, #00d4aa, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

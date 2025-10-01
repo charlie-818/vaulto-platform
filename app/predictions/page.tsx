@@ -18,20 +18,21 @@ import {
   AlertCircle,
   CheckCircle,
   XCircle,
-  Info
+  Info,
+  BookOpen,
+  Lightbulb,
+  TrendingUp as TrendingUpIcon,
+  Users,
+  Globe,
+  Shield,
+  Zap
 } from 'lucide-react'
 import AIAssistant from '@/components/AIAssistant'
-import WalletButton from '@/components/WalletButton'
 import { predictionMarkets, marketInsights } from '@/lib/mockData'
-import { WalletState, PredictionMarket, MarketInsight } from '@/types'
-import { generateMockAddress } from '@/lib/utils'
+import { PredictionMarket, MarketInsight } from '@/types'
 
 export default function PredictionsPage() {
   const pathname = usePathname()
-  const [walletState, setWalletState] = useState<WalletState>({
-    isConnected: false,
-    balance: 0
-  })
   const [aiAssistantOpen, setAiAssistantOpen] = useState(false)
   const [aiContext, setAiContext] = useState('')
   const [aiQuestion, setAiQuestion] = useState('')
@@ -64,35 +65,10 @@ export default function PredictionsPage() {
     return () => clearInterval(interval)
   }, [])
 
-  const handleConnectWallet = () => {
-    const mockAddress = generateMockAddress()
-    setWalletState({
-      isConnected: true,
-      address: mockAddress,
-      balance: 10000
-    })
-  }
-
-  const handleDisconnectWallet = () => {
-    setWalletState({
-      isConnected: false,
-      balance: 0
-    })
-  }
-
   const handleExplain = (context: string, question?: string) => {
     setAiContext(context)
     setAiQuestion(question || '')
     setAiAssistantOpen(true)
-  }
-
-  const handlePlaceBet = (marketId: string, outcomeId: string, amount: number) => {
-    if (!walletState.isConnected) {
-      handleConnectWallet()
-      return
-    }
-    // Mock bet placement
-    console.log(`Placing bet: ${amount} on ${outcomeId} in market ${marketId}`)
   }
 
   const filteredMarkets = predictionMarkets.filter(market => {
@@ -182,7 +158,7 @@ export default function PredictionsPage() {
           <div className="flex items-center justify-between h-12">
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
-                <div className="relative w-16 h-6">
+                <div className="relative w-32 h-10">
                   <Image
                     src="/logo.png"
                     alt="Vaulto Logo"
@@ -245,11 +221,6 @@ export default function PredictionsPage() {
                 </Link>
               </nav>
             </div>
-            <WalletButton
-              walletState={walletState}
-              onConnect={handleConnectWallet}
-              onDisconnect={handleDisconnectWallet}
-            />
           </div>
         </div>
       </header>
@@ -260,10 +231,10 @@ export default function PredictionsPage() {
         {/* Page Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-vaulto-light mb-4">
-            Prediction Markets
+            Market Intelligence Hub
           </h1>
           <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto">
-            Trade on the future of crypto with real-time odds and market insights. Bet on price movements, regulatory developments, and adoption trends.
+            Stay informed with real-time market sentiment, expert insights, and data-driven analysis to make smarter investment decisions. Explore prediction markets as a source of market intelligence.
           </p>
         </div>
 
@@ -278,23 +249,24 @@ export default function PredictionsPage() {
             <div className="p-2 bg-vaulto-dark/20 rounded-lg">
               <ExternalLink className="w-5 h-5" />
             </div>
-            <span className="text-lg">Trade Prediction Markets</span>
+            <span className="text-lg">View Live Prediction Markets</span>
             <ExternalLink className="w-4 h-4" />
           </a>
           <p className="text-vaulto-light/60 text-sm mt-3">
-            Access live prediction markets and crypto trading opportunities
+            Access real-time prediction market data and insights
           </p>
         </div>
 
-        {/* Live Market Stats */}
+        {/* Market Intelligence Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-vaulto-light/70 text-sm">Total Volume</p>
-                <p className="text-2xl font-bold text-vaulto-light">$12.4M</p>
+                <p className="text-vaulto-light/70 text-sm">Market Sentiment</p>
+                <p className="text-2xl font-bold text-vaulto-light">Bullish</p>
+                <p className="text-xs text-green-400">+12% this week</p>
               </div>
-              <DollarSign className="w-8 h-8 text-vaulto-primary" />
+              <TrendingUp className="w-8 h-8 text-green-400" />
             </div>
           </div>
           <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
@@ -302,6 +274,7 @@ export default function PredictionsPage() {
               <div>
                 <p className="text-vaulto-light/70 text-sm">Active Markets</p>
                 <p className="text-2xl font-bold text-vaulto-light">{predictionMarkets.length}</p>
+                <p className="text-xs text-vaulto-light/50">Being tracked</p>
               </div>
               <Activity className="w-8 h-8 text-vaulto-primary" />
             </div>
@@ -309,30 +282,32 @@ export default function PredictionsPage() {
           <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-vaulto-light/70 text-sm">Total Liquidity</p>
-                <p className="text-2xl font-bold text-vaulto-light">$9.8M</p>
+                <p className="text-vaulto-light/70 text-sm">Accuracy Rate</p>
+                <p className="text-2xl font-bold text-vaulto-light">78%</p>
+                <p className="text-xs text-vaulto-light/50">Historical</p>
               </div>
-              <BarChart3 className="w-8 h-8 text-vaulto-primary" />
+              <Target className="w-8 h-8 text-vaulto-primary" />
             </div>
           </div>
           <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-vaulto-light/70 text-sm">Live Updates</p>
+                <p className="text-vaulto-light/70 text-sm">Data Freshness</p>
                 <p className="text-2xl font-bold text-green-400">Live</p>
+                <p className="text-xs text-vaulto-light/50">Real-time updates</p>
               </div>
               <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
             </div>
           </div>
         </div>
 
-        {/* Filters */}
+        {/* Market Intelligence Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-vaulto-light/70" />
             <input
               type="text"
-              placeholder="Search markets..."
+              placeholder="Search market insights and predictions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-vaulto-secondary border border-vaulto-light/20 rounded-lg text-vaulto-light placeholder-vaulto-light/50 focus:outline-none focus:border-vaulto-primary"
@@ -375,127 +350,82 @@ export default function PredictionsPage() {
             const insights = getMarketInsights(market.id)
             const currentOdds = liveOdds[market.id] || {}
             
+            // Get the top outcome
+            const topOutcome = market.outcomes.reduce((prev, current) => {
+              const prevPrice = currentOdds[prev.id] || prev.lastPrice
+              const currentPrice = currentOdds[current.id] || current.lastPrice
+              return currentPrice > prevPrice ? current : prev
+            })
+            const topPrice = currentOdds[topOutcome.id] || topOutcome.lastPrice
+            
             return (
-              <div key={market.id} className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6 hover:border-vaulto-primary/40 transition-colors">
-                {/* Market Header */}
+              <div key={market.id} className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6 hover:border-vaulto-primary/40 transition-all hover:shadow-lg">
+                {/* Simplified Header */}
                 <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-10 h-10 bg-vaulto-primary/20 rounded-lg flex items-center justify-center`}>
+                  <div className="flex items-start space-x-3 flex-1">
+                    <div className={`w-10 h-10 bg-vaulto-primary/20 rounded-lg flex items-center justify-center shrink-0`}>
                       <CategoryIcon className={`w-5 h-5 ${getCategoryColor(market.category)}`} />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-vaulto-light mb-1">{market.title}</h3>
-                      <div className="flex items-center space-x-2 text-sm text-vaulto-light/70">
-                        <Clock className="w-4 h-4" />
-                        <span>{formatTimeRemaining(market.endDate)}</span>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-vaulto-light mb-2 leading-tight">{market.title}</h3>
+                      <div className="flex items-center space-x-3 text-sm text-vaulto-light/60">
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{formatTimeRemaining(market.endDate)}</span>
+                        </div>
                         <span>•</span>
-                        <span>{market.marketMaker}</span>
+                        <div className="flex items-center space-x-1">
+                          <DollarSign className="w-3.5 h-3.5" />
+                          <span>${(market.totalVolume / 1000000).toFixed(1)}M</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-vaulto-light/70">Volume</p>
-                    <p className="text-lg font-bold text-vaulto-light">${(market.totalVolume / 1000000).toFixed(1)}M</p>
+                </div>
+
+                {/* Main Prediction - Simplified to show top outcome */}
+                <div className="bg-gradient-to-br from-vaulto-dark/70 to-vaulto-dark/40 rounded-lg p-5 mb-4 border border-vaulto-primary/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-vaulto-light/70 text-sm">Top Prediction</span>
+                    <div className={`w-2 h-2 rounded-full ${topPrice > 0.5 ? 'bg-green-400' : 'bg-yellow-400'} animate-pulse`} />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-vaulto-light font-semibold text-base">{topOutcome.name}</span>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-vaulto-primary">{(topPrice * 100).toFixed(0)}%</p>
+                      <p className="text-xs text-vaulto-light/50">probability</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Market Description */}
-                <p className="text-vaulto-light/70 mb-4 text-sm">{market.description}</p>
-
-                {/* Outcomes */}
-                <div className="space-y-3 mb-4">
-                  {market.outcomes.map((outcome) => {
-                    const currentPrice = currentOdds[outcome.id] || outcome.lastPrice
-                    const priceChange = currentPrice - outcome.lastPrice
-                    const isPositive = priceChange > 0
-                    
-                    return (
-                      <div key={outcome.id} className="flex items-center justify-between p-3 bg-vaulto-dark/50 rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <span className="text-vaulto-light font-medium">{outcome.name}</span>
-                          <div className="flex items-center space-x-1">
-                            {isPositive ? (
-                              <TrendingUp className="w-4 h-4 text-green-400" />
-                            ) : (
-                              <TrendingDown className="w-4 h-4 text-red-400" />
-                            )}
-                            <span className={`text-sm ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
-                              {priceChange > 0 ? '+' : ''}{(priceChange * 100).toFixed(1)}%
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          <div className="text-right">
-                            <p className="text-vaulto-light font-bold">{(currentPrice * 100).toFixed(1)}%</p>
-                            <p className="text-xs text-vaulto-light/70">{(1 / currentPrice).toFixed(2)}x</p>
-                          </div>
-                          <button
-                            onClick={() => handlePlaceBet(market.id, outcome.id, 100)}
-                            className="px-4 py-2 bg-vaulto-primary text-vaulto-dark font-medium rounded-lg hover:bg-vaulto-primary/90 transition-colors text-sm"
-                          >
-                            Bet
-                          </button>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Market Insights */}
+                {/* Key Insight - Show only one */}
                 {insights.length > 0 && (
-                  <div className="mb-4">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Info className="w-4 h-4 text-vaulto-primary" />
-                      <span className="text-sm font-medium text-vaulto-light">Latest Insights</span>
-                    </div>
-                    <div className="space-y-2">
-                      {insights.slice(0, 2).map((insight) => (
-                        <div key={insight.id} className="p-3 bg-vaulto-dark/30 rounded-lg">
-                          <div className="flex items-start justify-between mb-1">
-                            <h4 className="text-sm font-medium text-vaulto-light">{insight.title}</h4>
-                            <span className={`text-xs px-2 py-1 rounded ${
-                              insight.impact === 'positive' ? 'bg-green-400/20 text-green-400' :
-                              insight.impact === 'negative' ? 'bg-red-400/20 text-red-400' :
-                              'bg-gray-400/20 text-gray-400'
-                            }`}>
-                              {insight.impact}
-                            </span>
-                          </div>
-                          <p className="text-xs text-vaulto-light/70 mb-2">{insight.description}</p>
-                          <div className="flex items-center justify-between text-xs text-vaulto-light/50">
-                            <span>{insight.source}</span>
-                            <span>Confidence: {(insight.confidence * 100).toFixed(0)}%</span>
-                          </div>
-                        </div>
-                      ))}
+                  <div className="bg-vaulto-dark/30 rounded-lg p-4 mb-4 border border-vaulto-primary/10">
+                    <div className="flex items-start space-x-3">
+                      <Info className="w-4 h-4 text-vaulto-primary mt-0.5 shrink-0" />
+                      <div className="flex-1">
+                        <p className="text-sm text-vaulto-light/80 leading-relaxed">{insights[0].description}</p>
+                      </div>
                     </div>
                   </div>
                 )}
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {market.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-1 bg-vaulto-primary/20 text-vaulto-primary text-xs rounded">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Market Actions */}
-                <div className="flex items-center justify-between">
+                {/* Bottom Actions - Simplified */}
+                <div className="flex items-center justify-between pt-3 border-t border-vaulto-light/10">
                   <button
-                    onClick={() => handleExplain(`Prediction Market: ${market.title}`, 'What are the key factors affecting this prediction?')}
-                    className="text-vaulto-primary hover:text-vaulto-primary/80 text-sm font-medium"
+                    onClick={() => handleExplain(`Market Intelligence: ${market.title}`, 'What are the key factors affecting this market prediction and how can I use this information for investment decisions?')}
+                    className="flex items-center space-x-2 text-vaulto-primary hover:text-vaulto-primary/80 text-sm font-medium transition-colors"
                   >
-                    Get AI Analysis
+                    <Zap className="w-4 h-4" />
+                    <span>Analyze</span>
                   </button>
-                  <a
-                    href="#"
-                    className="flex items-center space-x-1 text-vaulto-light/70 hover:text-vaulto-light text-sm"
-                  >
-                    <span>View Details</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+                  <div className="flex items-center space-x-2">
+                    {market.tags.slice(0, 2).map((tag) => (
+                      <span key={tag} className="px-2 py-1 bg-vaulto-primary/10 text-vaulto-primary/70 text-xs rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             )
