@@ -1,12 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { TrendingUp, Filter, Search, ExternalLink, Target, Activity } from 'lucide-react'
 import AIAssistant from '@/components/AIAssistant'
-import WalletButton from '@/components/WalletButton'
 import AssetListItem from '@/components/AssetListItem'
 import IndexCard from '@/components/IndexCard'
 import IndexDetailsModal from '@/components/IndexDetailsModal'
@@ -16,7 +12,6 @@ import { WalletState, Transaction, TokenizedAsset, CustomIndex, IndexTrade } fro
 import { generateMockAddress, generateMockTxHash } from '@/lib/utils'
 
 export default function SwapPage() {
-  const pathname = usePathname()
   const [walletState, setWalletState] = useState<WalletState>({
     isConnected: false,
     balance: 0
@@ -142,86 +137,9 @@ export default function SwapPage() {
       <div className="absolute inset-0 opacity-30" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
       }}></div>
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-12">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
-                <div className="relative w-32 h-10">
-                  <Image
-                    src="/logo.png"
-                    alt="Vaulto Logo"
-                    fill
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-              </div>
-              <nav className="flex items-center space-x-4">
-                <Link
-                  href="/"
-                  className={`text-sm font-medium transition-all duration-200 ${
-                    pathname === '/'
-                      ? 'text-vaulto-primary'
-                      : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  Mint
-                </Link>
-                <Link
-                  href="/swap"
-                  className={`text-sm font-medium transition-all duration-200 ${
-                    pathname === '/swap'
-                      ? 'text-vaulto-primary'
-                      : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  Invest
-                </Link>
-                <Link
-                  href="/vaults"
-                  className={`text-sm font-medium transition-all duration-200 ${
-                    pathname === '/vaults'
-                      ? 'text-vaulto-primary'
-                      : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  Vaults
-                </Link>
-                <Link
-                  href="/predictions"
-                  className={`text-sm font-medium transition-all duration-200 ${
-                    pathname === '/predictions'
-                      ? 'text-vaulto-primary'
-                      : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  Predictions
-                </Link>
-                <Link
-                  href="/ai"
-                  className={`text-sm font-medium transition-all duration-200 ${
-                    pathname === '/ai'
-                      ? 'text-vaulto-primary'
-                      : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  Learn
-                </Link>
-              </nav>
-            </div>
-            <WalletButton
-              walletState={walletState}
-              onConnect={handleConnectWallet}
-              onDisconnect={handleDisconnectWallet}
-            />
-          </div>
-        </div>
-      </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-vaulto-light mb-4">
