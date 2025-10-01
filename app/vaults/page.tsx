@@ -108,33 +108,28 @@ export default function VaultsPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-vaulto-light mb-4">
-            Investment Vaults
-          </h1>
-          <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto">
-            Discover professionally managed investment vaults with automated strategies. 
-            Earn competitive yields through diversified portfolios of tokenized assets, DeFi protocols, and yield farming strategies.
-          </p>
-        </div>
-
-        {/* Investment Holdings Platform Button */}
-        <div className="text-center mb-12">
-          <a
-            href="https://vaulto.holdings"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center space-x-3 bg-gradient-to-r from-vaulto-primary/80 to-vaulto-primary/60 text-vaulto-dark font-bold px-8 py-4 rounded-xl hover:opacity-90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-          >
-            <div className="p-2 bg-vaulto-dark/20 rounded-lg">
-              <ExternalLink className="w-5 h-5" />
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-vaulto-light mb-2">
+                Investment Vaults
+              </h1>
+              <p className="text-vaulto-light/70">
+                Professionally managed vaults with automated strategies
+              </p>
             </div>
-            <span className="text-lg">Access Investment Holdings</span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
-          <p className="text-vaulto-light/60 text-sm mt-3">
-            Manage your investment portfolio and track vault performance
-          </p>
+            
+            {/* External Link */}
+            <a
+              href="https://vaulto.holdings"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 px-4 py-2 bg-vaulto-primary text-vaulto-dark text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            >
+              <span>Investment Holdings</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
         {/* Filters */}

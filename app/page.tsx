@@ -79,13 +79,13 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         
-        {/* Mint Section Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-vaulto-light mb-4">
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-vaulto-light mb-2">
             Mint Stablecoins
           </h1>
-          <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto">
-            Create your own stablecoins backed by collateral. Choose from fiat-backed, yield-bearing, or crypto-native options with transparent risk metrics.
+          <p className="text-vaulto-light/70">
+            Create stablecoins backed by collateral with transparent risk metrics
           </p>
         </div>
 
