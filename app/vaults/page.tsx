@@ -137,31 +137,6 @@ export default function VaultsPage() {
           </p>
         </div>
 
-        {/* Hyperliquid Integration Banner */}
-        <div className="bg-gradient-to-r from-vaulto-primary/20 to-vaulto-secondary border border-vaulto-primary/30 rounded-xl p-6 mb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-vaulto-primary/20 rounded-lg flex items-center justify-center">
-                <ExternalLink className="w-6 h-6 text-vaulto-primary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-vaulto-light">Powered by Hyperliquid</h3>
-                <p className="text-vaulto-light/70">
-                  All vaults are professionally managed through Hyperliquid's institutional-grade infrastructure
-                </p>
-              </div>
-            </div>
-            <a
-              href="https://hyperliquid.xyz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-vaulto-primary text-vaulto-dark font-medium rounded-lg hover:bg-vaulto-primary/90 transition-colors"
-            >
-              Visit Hyperliquid
-            </a>
-          </div>
-        </div>
-
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
