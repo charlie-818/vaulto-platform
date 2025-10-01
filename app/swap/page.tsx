@@ -141,47 +141,50 @@ export default function SwapPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-vaulto-light mb-4">
-            Investment Opportunities
-          </h1>
-          <p className="text-xl text-vaulto-light/70 max-w-3xl mx-auto mb-6">
-            Discover and invest in tokenized assets and custom indices. Trade individual stocks, startups, commodities, 
-            or diversify with professionally managed index funds.
-          </p>
-          
-          {/* View Toggle */}
-          <div className="flex items-center justify-center space-x-4">
-            <button
-              onClick={() => setActiveView('dashboard')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                activeView === 'dashboard'
-                  ? 'bg-vaulto-primary text-vaulto-dark'
-                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
-              }`}
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => setActiveView('indices')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                activeView === 'indices'
-                  ? 'bg-vaulto-primary text-vaulto-dark'
-                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
-              }`}
-            >
-              Custom Indices
-            </button>
-            <button
-              onClick={() => setActiveView('assets')}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                activeView === 'assets'
-                  ? 'bg-vaulto-primary text-vaulto-dark'
-                  : 'bg-vaulto-secondary text-vaulto-light hover:bg-vaulto-secondary/80'
-              }`}
-            >
-              Individual Assets
-            </button>
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-vaulto-light mb-2">
+                Investment Opportunities
+              </h1>
+              <p className="text-vaulto-light/70">
+                Discover and invest in tokenized assets and custom indices
+              </p>
+            </div>
+            
+            {/* View Toggle - Segmented Control */}
+            <div className="flex items-center bg-slate-800/50 rounded-lg p-1 border border-slate-700/50">
+              <button
+                onClick={() => setActiveView('dashboard')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  activeView === 'dashboard'
+                    ? 'bg-vaulto-primary text-vaulto-dark shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => setActiveView('indices')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  activeView === 'indices'
+                    ? 'bg-vaulto-primary text-vaulto-dark shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Indices
+              </button>
+              <button
+                onClick={() => setActiveView('assets')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  activeView === 'assets'
+                    ? 'bg-vaulto-primary text-vaulto-dark shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Assets
+              </button>
+            </div>
           </div>
         </div>
 
