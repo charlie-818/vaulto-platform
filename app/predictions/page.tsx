@@ -173,50 +173,6 @@ export default function PredictionsPage() {
           </p>
         </div>
 
-        {/* Market Intelligence Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-vaulto-light/70 text-sm">Market Sentiment</p>
-                <p className="text-2xl font-bold text-vaulto-light">Bullish</p>
-                <p className="text-xs text-green-400">+12% this week</p>
-              </div>
-              <TrendingUp className="w-8 h-8 text-green-400" />
-            </div>
-          </div>
-          <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-vaulto-light/70 text-sm">Active Markets</p>
-                <p className="text-2xl font-bold text-vaulto-light">{predictionMarkets.length}</p>
-                <p className="text-xs text-vaulto-light/50">Being tracked</p>
-              </div>
-              <Activity className="w-8 h-8 text-vaulto-primary" />
-            </div>
-          </div>
-          <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-vaulto-light/70 text-sm">Accuracy Rate</p>
-                <p className="text-2xl font-bold text-vaulto-light">78%</p>
-                <p className="text-xs text-vaulto-light/50">Historical</p>
-              </div>
-              <Target className="w-8 h-8 text-vaulto-primary" />
-            </div>
-          </div>
-          <div className="bg-vaulto-secondary border border-vaulto-primary/20 rounded-xl p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-vaulto-light/70 text-sm">Data Freshness</p>
-                <p className="text-2xl font-bold text-green-400">Live</p>
-                <p className="text-xs text-vaulto-light/50">Real-time updates</p>
-              </div>
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-            </div>
-          </div>
-        </div>
-
         {/* Market Intelligence Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
