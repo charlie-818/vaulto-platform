@@ -80,7 +80,7 @@ export default function HomePage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         
         {/* Page Header */}
-        <div className="mb-8">
+        <div className="mb-8 pt-8">
           <h1 className="text-3xl font-bold text-vaulto-light mb-2">
             Mint Stablecoins
           </h1>

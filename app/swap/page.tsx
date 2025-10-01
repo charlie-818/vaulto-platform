@@ -141,7 +141,7 @@ export default function SwapPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10">
         {/* Hero Section */}
-        <div className="mb-8">
+        <div className="mb-8 pt-8">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-vaulto-light mb-2">

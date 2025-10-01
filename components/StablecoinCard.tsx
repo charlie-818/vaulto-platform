@@ -112,9 +112,20 @@ export default function StablecoinCard({
     <div className="bg-vaulto-secondary border border-vaulto-light/20 rounded-xl p-6 hover:border-vaulto-light/40 transition-colors">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
-        <div>
-          <h3 className="text-xl font-bold text-vaulto-light">{stablecoin.name}</h3>
-          <p className="text-vaulto-light/70 text-sm">{stablecoin.symbol}</p>
+        <div className="flex items-center space-x-3">
+          <div className="relative w-12 h-12 rounded-lg p-2">
+            <Image
+              src={getStablecoinLogo(stablecoin.symbol).src}
+              alt={getStablecoinLogo(stablecoin.symbol).alt}
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-vaulto-light">{stablecoin.name}</h3>
+            <p className="text-vaulto-light/70 text-sm">{stablecoin.symbol}</p>
+          </div>
         </div>
         <ExplainButton
           context={`${stablecoin.symbol} stablecoin`}

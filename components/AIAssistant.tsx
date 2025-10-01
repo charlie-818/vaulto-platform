@@ -1,7 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { X, Send, Bot, Sparkles } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { X, Send, Bot, Sparkles, AlertCircle } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { AIResponse } from '@/types'
 
 interface AIAssistantProps {
@@ -11,20 +13,12 @@ interface AIAssistantProps {
   initialQuestion?: string
 }
 
-const mockAIResponses: Record<string, string> = {
-  'stablecoin': 'Stablecoins are digital currencies designed to maintain a stable value relative to a reference asset, typically the US dollar. Vaulto offers three types: vltUSD (fiat-backed), vltUSDy (yield-bearing), and vltUSDe (crypto-native). Each provides different risk profiles and yield opportunities.',
-  'minting': 'Minting stablecoins involves depositing collateral (USD, crypto, or other assets) to create new tokens. The process is transparent and verifiable on-chain. You can mint any amount above the minimum threshold, and the tokens are immediately available for use.',
-  'yield': 'Yield-bearing assets like vltUSDy generate returns through various DeFi strategies including lending, liquidity provision, and automated yield farming. The target yield is 8.5% APY, though actual returns may vary based on market conditions.',
-  'tokenized': 'Tokenized assets represent real-world assets (stocks, commodities, private companies) as blockchain tokens. This enables fractional ownership, 24/7 trading, and global accessibility while maintaining the underlying asset\'s value and characteristics.',
-  'risks': 'Key risks include smart contract vulnerabilities, regulatory changes, market volatility, and counterparty risks. Vaulto implements multiple security measures including audits, insurance, and transparent reserve reporting to mitigate these risks.',
-  'swap': 'Swapping involves exchanging one asset for another at current market rates. The process is automated through smart contracts, ensuring fair pricing and immediate settlement. All swaps are recorded on-chain for transparency.',
-  'default': 'I\'m here to help with any questions about Vaulto\'s platform, stablecoin mechanics, tokenized assets, or investment strategies. Feel free to ask about specific features, risks, or how to get started!'
-}
-
 export default function AIAssistant({ isOpen, onClose, context, initialQuestion }: AIAssistantProps) {
   const [messages, setMessages] = useState<AIResponse[]>([])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (initialQuestion) {
@@ -33,25 +27,66 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
     }
   }, [initialQuestion])
 
-  const getAIResponse = (question: string): string => {
-    const lowerQuestion = question.toLowerCase()
-    
-    // Check for specific keywords
-    if (lowerQuestion.includes('stablecoin') || lowerQuestion.includes('vltusd')) {
-      return mockAIResponses.stablecoin
-    } else if (lowerQuestion.includes('mint') || lowerQuestion.includes('minting')) {
-      return mockAIResponses.minting
-    } else if (lowerQuestion.includes('yield') || lowerQuestion.includes('return')) {
-      return mockAIResponses.yield
-    } else if (lowerQuestion.includes('tokenized') || lowerQuestion.includes('token')) {
-      return mockAIResponses.tokenized
-    } else if (lowerQuestion.includes('risk') || lowerQuestion.includes('safe')) {
-      return mockAIResponses.risks
-    } else if (lowerQuestion.includes('swap') || lowerQuestion.includes('trade')) {
-      return mockAIResponses.swap
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  const getAIResponse = async (question: string, onChunk: (chunk: string) => void): Promise<void> => {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: question,
+          context: context
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get AI response')
+      }
+
+      const reader = response.body?.getReader()
+      if (!reader) {
+        throw new Error('No response body')
+      }
+
+      const decoder = new TextDecoder()
+      let buffer = ''
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || ''
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6)
+            if (data === '[DONE]') {
+              return
+            }
+            try {
+              const parsed = JSON.parse(data)
+              if (parsed.content) {
+                onChunk(parsed.content)
+              }
+            } catch (e) {
+              // Ignore parsing errors for incomplete chunks
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error getting AI response:', error)
+      setError('Failed to connect to AI service. Please try again.')
+      onChunk('I apologize, but I\'m having trouble connecting to the AI service right now. Please try again in a moment.')
     }
-    
-    return mockAIResponses.default
   }
 
   const handleSendMessage = async (message: string) => {
@@ -67,19 +102,42 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsTyping(true)
+    setError(null)
 
-    // Simulate AI response delay
-    setTimeout(() => {
-      const aiResponse: AIResponse = {
-        question: message,
-        answer: getAIResponse(message),
-        timestamp: new Date(),
-        context: context
-      }
-      
-      setMessages(prev => [...prev.slice(0, -1), aiResponse])
+    // Create initial AI response with empty answer
+    const aiResponse: AIResponse = {
+      question: message,
+      answer: '',
+      timestamp: new Date(),
+      context: context
+    }
+    
+    setMessages(prev => [...prev.slice(0, -1), userMessage, aiResponse])
+
+    try {
+      await getAIResponse(message, (content: string) => {
+        setMessages(prev => {
+          const newMessages = [...prev]
+          const lastMessage = newMessages[newMessages.length - 1]
+          if (lastMessage && lastMessage.question === message) {
+            lastMessage.answer = content
+          }
+          return newMessages
+        })
+      })
+    } catch (error) {
+      console.error('Error handling message:', error)
+      setMessages(prev => {
+        const newMessages = [...prev]
+        const lastMessage = newMessages[newMessages.length - 1]
+        if (lastMessage && lastMessage.question === message) {
+          lastMessage.answer = 'I apologize, but I encountered an error while processing your request. Please try again.'
+        }
+        return newMessages
+      })
+    } finally {
       setIsTyping(false)
-    }, 1500)
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -114,6 +172,13 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-center space-x-2">
+              <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+          
           {messages.length === 0 && (
             <div className="text-center py-8">
               <Sparkles className="w-12 h-12 text-vaulto-primary mx-auto mb-4" />
@@ -133,7 +198,26 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
               </div>
               <div className="flex justify-start">
                 <div className="bg-vaulto-dark text-vaulto-light p-3 rounded-lg max-w-[80%]">
-                  <p className="text-sm">{message.answer}</p>
+                  <div className="text-sm prose prose-invert prose-sm max-w-none">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc list-inside mb-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal list-inside mb-2">{children}</ol>,
+                        li: ({ children }) => <li className="mb-1">{children}</li>,
+                        strong: ({ children }) => <strong className="font-semibold text-vaulto-primary">{children}</strong>,
+                        code: ({ children }) => <code className="bg-vaulto-secondary px-1 py-0.5 rounded text-xs font-mono">{children}</code>,
+                        pre: ({ children }) => <pre className="bg-vaulto-secondary p-2 rounded overflow-x-auto mb-2">{children}</pre>,
+                        blockquote: ({ children }) => <blockquote className="border-l-4 border-vaulto-primary pl-4 italic mb-2">{children}</blockquote>,
+                        h1: ({ children }) => <h1 className="text-lg font-bold mb-2">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-base font-bold mb-2">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-sm font-bold mb-1">{children}</h3>,
+                      }}
+                    >
+                      {message.answer}
+                    </ReactMarkdown>
+                  </div>
                   <p className="text-xs text-vaulto-light/70 mt-2">
                     {message.timestamp.toLocaleTimeString()}
                   </p>
@@ -153,6 +237,7 @@ export default function AIAssistant({ isOpen, onClose, context, initialQuestion 
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         {/* Input */}
